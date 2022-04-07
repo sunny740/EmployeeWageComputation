@@ -9,28 +9,24 @@ namespace EmployeeWageComputation
     public class WageComputation
     {
         const int IS_PRESENT = 0;
-        //public void Employee()
-        //{
-        //    Random random = new Random();
-        //    int check = random.Next(0, 2);
-        //    if (check == IS_PRESENT)
-        //        Console.WriteLine("Employee is present");
-        //    else
-        //        Console.WriteLine("Employee is Not Present");
-        //}
 
         //Conatant 
-        int IS_FULL_TIME = 1;
+        int IS_PART_TIME = 1;
+        int IS_FULL_TIME = 2;
         int EMP_RATE_PER_HOUR = 20;
         //Variable
-        public void CalculteEmpWage()
+        public void EmpWageParttime()
         {
             int empHrs = 0;
             int empWage = 0;
             Random random = new Random();
             //Computation
-            int empCheck = random.Next(0, 2);
-            if (empCheck == IS_FULL_TIME)
+            int empCheck = random.Next(0, 3);
+            if (empCheck == IS_PART_TIME)
+            {
+                empHrs = 4;
+            }
+            else if (empCheck == IS_FULL_TIME)
             {
                 empHrs = 8;
             }
@@ -41,5 +37,6 @@ namespace EmployeeWageComputation
             empWage = empHrs * EMP_RATE_PER_HOUR;
             Console.WriteLine("Emp Wage : " + empWage);
         }
+
     }
 }
