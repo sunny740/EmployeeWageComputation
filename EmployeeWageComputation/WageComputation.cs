@@ -4,45 +4,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeWageComputation
+namespace EmployeeWage
 {
-    public class WageComputation
+    class WageComputation
     {
-        //constance value
-        const int PART_TIME_EMP = 1,
-        FULL_TIME_EMP = 2,
-        EMP_FULL_DAY_WRKING_HR = 8,
-        EMP_PART_TIME_WRKING_HR = 4;
+        public const int EMP_FULLTIME = 1, EMP_PARTTIME = 2;
+        static Random random = new Random();
 
-        //variable values
-        int empHrs = 0, totalEmpSalary = 0, totalEmpHrs = 0, day = 0;
+        private string company;
+        private int emp_Wage_Per_Hr;
+        private int working_Days_Per_Month;
+        private int max_Hrs_Per_Month;
+        private int total_Emp_Wage;
 
-        public void EmpWage(string company_Name, int EMP_WAGE_PR_HR, int MAX_WORKING_HR, int EMP_WORKING_Days_PR_MONTH)
+        public WageComputation(string company, int emp_Wage_Per_Hr, int working_Days_Per_Month, int max_Hrs_Per_Month)
         {
-            while (day <= EMP_WORKING_Days_PR_MONTH && empHrs <= MAX_WORKING_HR)
+            this.company = company;
+            this.emp_Wage_Per_Hr = emp_Wage_Per_Hr;
+            this.working_Days_Per_Month = working_Days_Per_Month;
+            this.max_Hrs_Per_Month = max_Hrs_Per_Month;
+        }
+
+        public void TotalWageForEachCompany()
+        {
+            int empHrs = 0, total_Emp_Hrs = 0, totalWorkingDays = 1, daily_Emp_Wage = 0;
+
+            while (totalWorkingDays <= working_Days_Per_Month && total_Emp_Hrs <= max_Hrs_Per_Month)
             {
-                Random random = new Random();
-                int empCheck = random.Next(0, 3);
+                int randomInput = random.Next(0, 3);
 
-                switch (empCheck)
+                switch (randomInput)
                 {
-                    case FULL_TIME_EMP:
-
-                        empHrs += EMP_FULL_DAY_WRKING_HR;
+                    case EMP_FULLTIME:
+                        empHrs = 8;
                         break;
-                    case PART_TIME_EMP:
-
-                        empHrs += EMP_PART_TIME_WRKING_HR;
+                    case EMP_PARTTIME:
+                        empHrs = 4;
                         break;
                     default:
                         empHrs = 0;
                         break;
                 }
-                day++;
+                daily_Emp_Wage = empHrs * emp_Wage_Per_Hr;
+                Console.WriteLine("Employee wage for day {0} is: {1} for {2} Hrs", totalWorkingDays, daily_Emp_Wage, empHrs);
+                total_Emp_Wage += daily_Emp_Wage;
+                total_Emp_Hrs += empHrs;
+                totalWorkingDays++;
             }
-            totalEmpSalary = empHrs * EMP_WAGE_PR_HR;
-            Console.WriteLine("Company : " + company_Name + ", Emp Working Hour : " + EMP_WAGE_PR_HR + ", Maximum working Hour : " + MAX_WORKING_HR + ", Total Days In Month : " + EMP_WORKING_Days_PR_MONTH);
-            Console.WriteLine("One month Employee Salary is :" + totalEmpSalary);
+            Console.WriteLine("Total Days: {0}, Total working hours: {1}", (totalWorkingDays - 1), total_Emp_Hrs);
+            Console.WriteLine("Total Employee Wage for company " + company + " is: " + total_Emp_Wage + "\n");
+        }
+        public override string ToString()
+        {
+            return "Total Employee Wage for company: " + company + " is: " + total_Emp_Wage + "\n";
         }
     }
 }
